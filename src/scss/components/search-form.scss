@@ -1,0 +1,27 @@
+.search-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  //flex: 1 0 auto;
+  padding: 16px 32px;
+  box-shadow: 0px 4px 15px 0px hsla(0, 0%, 0%, 0.1);
+  border-radius: 5px;
+
+  i {
+    margin-right: 32px;
+    font-size: 24px;
+    color: var(--clr-secondary-300);
+  }
+
+  .search-input {
+    display: flex;
+    flex: 1 0 auto;
+    border: none;
+    outline: none;
+    //font-family: var(--ff-primary);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-300);
+    line-height: 16px;
+    color: var(--clr-secondary-300);
+  }
+}

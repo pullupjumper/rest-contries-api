@@ -1,3 +1,13 @@
-import '../scss/all.scss';
+import '../scss/index.scss';
 
-console.log('fff');
+const dropdown = document.querySelector('.dropdown');
+
+
+initComponents();
+
+
+function initComponents() {
+  dropdown.addEventListener('click', () => {
+    dropdown.classList.toggle('dropdown-show');
+  });
+}
