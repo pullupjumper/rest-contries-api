@@ -6,7 +6,7 @@ header {
   padding: 16px 0;
   z-index: 1;
   box-shadow: 0 4px 10px 0 hsla(0, 0%, 0%, 0.1);
-  background: var(--clr-white);
+  background: var(--clr-elements);
 }
 
 .brand {
@@ -14,24 +14,25 @@ header {
   margin-right: auto;
   size: var(--fs-600);
   font-weight: var(--fw-800);
-  color: var(--clr-primary-900);
+  color: var(--clr-text);
   line-height: 24px;
 }
 
-.switch {
+.toggle-btn {
   display: flex;
   align-items: center;
 
   i {
     font-size: 16px;
     margin-right: 8px;
+    color: var(--clr-text);
   }
 
   span {
     //font-family: var(--ff-primary);
     font-size: var(--fs-300);
     font-weight: var(--fw-600);
-    color: var(--clr-primary-900);
+    color: var(--clr-text);
   }
 }
 
@@ -40,7 +41,7 @@ header {
     font-size: 24px;
   }
 
-  .switch {
+  .toggle-btn {
     span {
       font-size: var(--fs-600);
     }
