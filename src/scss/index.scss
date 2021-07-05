@@ -7,18 +7,9 @@
 @import "./components/search-form";
 @import "./components/header";
 
-//
-//.container {
-//  display: flex;
-//  width: 90%;
-//  margin: 0 auto;
-//}
-
 .panel {
   display: flex;
   width: 100%;
-  //flex: 1 0 auto;
-  //flex-direction: column;
   flex-wrap: wrap;
   margin-bottom: 16px;
 

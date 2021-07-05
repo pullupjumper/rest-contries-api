@@ -1,21 +1,14 @@
 import '../scss/index.scss';
+import initToggleBtn from './toggle-btn';
 
 const dropdown = document.querySelector('.dropdown');
-const toggleBtn = document.querySelector('.toggle-btn');
 
 
 initComponents();
 
 
 function initComponents() {
-  toggleBtn.addEventListener('click', () => {
-    if (document.documentElement.hasAttribute('theme')) {
-      document.documentElement.removeAttribute('theme');
-    }
-    else {
-      document.documentElement.setAttribute('theme', 'dark');
-    }
-  });
+  initToggleBtn();
 
   dropdown.addEventListener('click', () => {
     dropdown.classList.toggle('dropdown-show');
