@@ -1,0 +1,22 @@
+.info {
+  margin-bottom: 8px;
+  font-size: var(--fs-300);
+  font-weight: var(--fw-300);
+  line-height: 16px;
+  color: var(--clr-text);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  span {
+    font-weight: var(--fw-600);
+  }
+}
+
+@media (min-width: 1440px) {
+  .info {
+    font-size: var(--fs-600);
+    line-height: 24px;
+  }
+}

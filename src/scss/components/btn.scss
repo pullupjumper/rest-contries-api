@@ -1,0 +1,21 @@
+.btn {
+  display: inline-flex;
+  width: auto;
+  padding: 8px 16px;
+  border-radius: 5px;
+  background: var(--clr-elements);
+  box-shadow: 0px 4px 15px 0px hsla(0, 0%, 0%, 0.1);
+  text-decoration: none;
+
+  i {
+    margin-right: 8px;
+    color: var(--clr-text);
+  }
+
+  &-text {
+    font-size: var(--fs-300);
+    font-weight: var(--fw-300);
+    color: var(--clr-text);
+    line-height: 16px;
+  }
+}
