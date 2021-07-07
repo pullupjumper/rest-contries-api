@@ -6,6 +6,8 @@ const dropdown = document.querySelector('.dropdown');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 const dropdownText = document.querySelector('.dropdown-text');
 const countryList = document.querySelector('.country-list');
+const content = document.querySelector('.content');
+
 
 const regionList = ['Africa', 'America', 'Asia', 'Europe', 'Oceania'];
 let selectedRegionIndex = 0;
@@ -17,6 +19,8 @@ function initComponents() {
   initToggleBtn();
   initDropdown();
   initCountryList();
+
+  content.addEventListener('click', toDetailPage);
 }
 
 
@@ -38,8 +42,11 @@ function initDropdown() {
 }
 
 function selectDropdownMenuItem(e) {
-  selectedRegionIndex = e.target.dataset['regionIndex'];
-  dropdownText.innerHTML = e.target.dataset['regionName'];
+  if (e.target.classList.contains('dropdown-item')) {
+    selectedRegionIndex = e.target.dataset['regionIndex'];
+    dropdownText.innerHTML = e.target.dataset['regionName'];
+    updateCountryList();
+  }
 }
 
 async function initCountryList() {
@@ -47,6 +54,20 @@ async function initCountryList() {
   let response = await RESTCountryApi.getCountriesByRegion(region);
 
   if (response != null) {
+    response.forEach(country => {
+      const item = createCountryListItem(country);
+      countryList.appendChild(item);
+    });
+  }
+}
+
+async function updateCountryList() {
+  const region = regionList[selectedRegionIndex];
+  let response = await RESTCountryApi.getCountriesByRegion(region);
+
+  if (response != null) {
+    countryList.innerHTML = '';
+
     response.forEach(country => {
       const item = createCountryListItem(country);
       countryList.appendChild(item);
@@ -71,4 +92,26 @@ function createCountryListItem(country) {
             </div>`;
   li.innerHTML = HTML;
   return li;
+}
+
+function toDetailPage(e) {
+  const data = getParentElementData(e.target);
+
+  if (data != null) {
+    window.location.assign('http://localhost:3000/detail.html?alpha3code=' + data);
+  }
+}
+
+function getParentElementData(el) {
+  if (el) {
+    while (el.parentElement) {
+      if (el.parentElement.classList.contains('country-list-item')) {
+        return el.parentElement.dataset['alpha3Code'];
+      } else {
+        el = el.parentElement;
+      }
+    }
+  }
+
+  return null;
 }
