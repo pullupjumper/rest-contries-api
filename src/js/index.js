@@ -8,7 +8,6 @@ const dropdownText = document.querySelector('.dropdown-text');
 const countryList = document.querySelector('.country-list');
 const content = document.querySelector('.content');
 
-
 const regionList = ['Africa', 'America', 'Asia', 'Europe', 'Oceania'];
 let selectedRegionIndex = 0;
 
@@ -19,8 +18,6 @@ function initComponents() {
   initToggleBtn();
   initDropdown();
   initCountryList();
-
-  content.addEventListener('click', toDetailPage);
 }
 
 
@@ -50,6 +47,7 @@ function selectDropdownMenuItem(e) {
 }
 
 async function initCountryList() {
+  content.addEventListener('click', toDetailPage);
   const region = regionList[selectedRegionIndex];
   let response = await RESTCountryApi.getCountriesByRegion(region);
 
