@@ -7,8 +7,10 @@ const dropdownMenu = document.querySelector('.dropdown-menu');
 const dropdownText = document.querySelector('.dropdown-text');
 const countryList = document.querySelector('.country-list');
 const content = document.querySelector('.content');
+const searchInput = document.querySelector('.search-input');
 
-const regionList = ['Africa', 'America', 'Asia', 'Europe', 'Oceania'];
+const regionList = ['Africa', 'Asia', 'Europe', 'Oceania'];
+let resultData = [];
 let selectedRegionIndex = 0;
 
 initComponents();
@@ -18,6 +20,24 @@ function initComponents() {
   initToggleBtn();
   initDropdown();
   initCountryList();
+  initSearchForm();
+}
+
+function initSearchForm() {
+  searchInput.addEventListener('input', debounce(inputHandler));
+}
+
+function inputHandler(el) {
+  const str = el.target.value.toUpperCase();
+
+  if (str.length > 1) {
+    const _resultData = resultData.filter(filterHandler(str));
+    updateCountryList(_resultData);
+  }
+
+  if (str.length === 0) {
+    updateCountryList(resultData);
+  }
 }
 
 
@@ -35,38 +55,31 @@ function initDropdown() {
     dropdownMenu.appendChild(div);
   });
 
-  dropdownMenu.addEventListener('click', selectDropdownMenuItem);
+  dropdownMenu.addEventListener('click', debounce(selectDropdownMenuItem));
 }
 
-function selectDropdownMenuItem(e) {
+async function selectDropdownMenuItem(e) {
   if (e.target.classList.contains('dropdown-item')) {
     selectedRegionIndex = e.target.dataset['regionIndex'];
     dropdownText.innerHTML = e.target.dataset['regionName'];
-    updateCountryList();
+    const region = regionList[selectedRegionIndex];
+    resultData = await RESTCountryApi.getCountriesByRegion(region);
+    updateCountryList(resultData);
   }
 }
 
 async function initCountryList() {
   content.addEventListener('click', toDetailPage);
   const region = regionList[selectedRegionIndex];
-  let response = await RESTCountryApi.getCountriesByRegion(region);
-
-  if (response != null) {
-    response.forEach(country => {
-      const item = createCountryListItem(country);
-      countryList.appendChild(item);
-    });
-  }
+  resultData = await RESTCountryApi.getCountriesByRegion(region);
+  updateCountryList(resultData);
 }
 
-async function updateCountryList() {
-  const region = regionList[selectedRegionIndex];
-  let response = await RESTCountryApi.getCountriesByRegion(region);
-
-  if (response != null) {
+async function updateCountryList(resultData) {
+  if (resultData != null) {
     countryList.innerHTML = '';
 
-    response.forEach(country => {
+    resultData.forEach(country => {
       const item = createCountryListItem(country);
       countryList.appendChild(item);
     });
@@ -112,4 +125,22 @@ function getParentElementData(el) {
   }
 
   return null;
+}
+
+function filterHandler(str) {
+  const regex = new RegExp(str);
+  return function (country) {
+    const alpha3Code = country.alpha3Code;
+    return regex.test(alpha3Code);
+  };
+}
+
+function debounce(fn, interval = 300) {
+  let timeout = null;
+  return function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      fn.apply(this, arguments);
+    }, interval);
+  };
 }

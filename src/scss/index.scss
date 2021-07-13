@@ -43,14 +43,10 @@
   .country-list {
     flex-direction: row;
     flex-wrap: wrap;
+    gap: calc(6%);
 
     &-item {
       width: 47%;
-      margin-right: 6%;
-
-      &:nth-child(2n) {
-        margin-right: 0;
-      }
     }
   }
 }
@@ -59,18 +55,10 @@
   .country-list {
     flex-direction: row;
     flex-wrap: wrap;
+    gap: calc(9% / 3);
 
     &-item {
       width: calc(91% / 4);
-      margin-right: calc(9% / 3);
-
-      &:nth-child(2n) {
-        margin-right: calc(9% / 3);
-      }
-
-      &:nth-child(4n) {
-        margin-right: 0;
-      }
     }
   }
 }
